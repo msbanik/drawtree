@@ -14,6 +14,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
 
     install_requires=[],
+    license='MIT',
+    keywords='tree draw ascii',
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

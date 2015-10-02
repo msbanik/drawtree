@@ -5,32 +5,35 @@ drawtree
     :target: https://pypi.python.org/pypi/drawtree
     :alt: Latest PyPI version
 
-.. image:: https://travis-ci.org/borntyping/cookiecutter-pypackage-minimal.png
-   :target: https://travis-ci.org/borntyping/cookiecutter-pypackage-minimal
-   :alt: Latest Travis CI build status
 
 Draw binary tree in plain text
 
 Usage
 -----
+Draw tree from level order traversal, '#' signifies a path terminator where no node exists below.
+
 .. code-block:: python
+
     from drawtree import draw_level_order
     draw_level_order('{3,9,20,#,#,15,7}')
-    ...
 
 ::
+
       3
      / \
     9  20
        / \
       15  7
 
+Draw random binary search tree
+
 .. code-block:: python
+
     from drawtree import draw_random_bst
     draw_random_bst(10)
-    ...
 
 ::
+
         64
         / \
        /   \
@@ -44,13 +47,16 @@ Usage
          \
          21
 
+Draw binary search tree from integer array
+
 .. code-block:: python
+
     from drawtree import draw_bst
     nums = [55, 30, 10, 5, 2, 20, 15, 25, 40, 35, 70, 60, 80, 75, 95]
     draw_bst(nums)
-    ...
 
 ::
+
                  55
                  / \
                 /   \
@@ -79,14 +85,13 @@ To install drawtree, simply:
     $ pip install drawtree
 
 
-Requirements
-^^^^^^^^^^^^
-
-Compatibility
--------------
-
 Licence
 -------
+MIT
+
+Reference
+---------
+`Draw tree <http://web.archive.org/web/20071224095835/http://www.openasthra.com/wp-content/uploads/2007/12/binary_trees1.c>`_
 
 Authors
 -------

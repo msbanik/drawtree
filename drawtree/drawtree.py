@@ -120,7 +120,7 @@ def build_ascii_tree_recursive(t):
     return node
 
 
-# Copy the tree into the ascii node structre
+# Copy the tree into the ascii node structure
 def build_ascii_tree(t):
     if t is None:
         return None
@@ -226,7 +226,7 @@ print_next = 0
 
 
 # This function prints the given level of the given tree, assuming
-# that the node has the given x cordinate.
+# that the node has the given x coordinate.
 def print_level(node, x, level):
     global print_next
     if node is None:

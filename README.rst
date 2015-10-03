@@ -1,7 +1,7 @@
 drawtree
 ========
 
-.. image:: https://pypip.in/v/drawtree/badge.png
+.. image:: https://img.shields.io/pypi/v/drawtree.svg?style=flat-square&label=latest%20version
     :target: https://pypi.python.org/pypi/drawtree
     :alt: Latest PyPI version
 

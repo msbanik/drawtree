@@ -285,7 +285,7 @@ def drawtree(t):
     while (i < proot.height):
         print_next = 0
         print_level(proot, -xmin, i)
-        print()
+        print('')
         i += 1
 
     if proot.height >= MAX_HEIGHT:

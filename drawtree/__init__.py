@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """drawtree - Draw binary tree in plain text"""
+from __future__ import absolute_import
 
 __version__ = '0.1.0'
 __author__ = 'Madhusudan Banik <msbanik@gmail.com>'

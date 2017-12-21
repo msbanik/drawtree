@@ -78,9 +78,6 @@ Draw binary search tree from integer array
 Command line
 ------------
 
-$ bst takes 
-
-
 Flags:
  -p, --preorder    interpet sequence as preorder    
  -b, --balanced    auto balance bst
@@ -124,7 +121,7 @@ Print a random bst:
 
     $ bst           (random bst of 10 nodes)
     $ bst 5         (random bst of 5 nodes)
-    $ bst -b 7      (random balanaced bst of 7 nodes)
+    $ bst -b 7      (random balanced bst of 7 nodes)
 
 
 Installation

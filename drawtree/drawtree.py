@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
 import sys
-
+import re
 
 class TreeNode(object):
     def __init__(self, val, left=None, right=None):
@@ -139,7 +138,7 @@ def compute_lprofile(node, x, y):
         return
 
     isleft = (node.parent_dir == -1)
-    lprofile[y] = min(lprofile[y], x - ((node.lablen - isleft) // 2))
+    lprofile[y] = min(lprofile[y], x - ((node.lablen - isleft) / 2))
     if node.left:
         i = 1
         while (i <= node.edge_length and y + i < MAX_HEIGHT):
@@ -155,7 +154,7 @@ def compute_rprofile(node, x, y):
         return
 
     notleft = (node.parent_dir != -1)
-    rprofile[y] = max(rprofile[y], x + ((node.lablen - notleft) // 2))
+    rprofile[y] = max(rprofile[y], x + ((node.lablen - notleft) / 2))
     if node.right is not None:
         i = 1
         while i <= node.edge_length and y + i < MAX_HEIGHT:
@@ -209,7 +208,8 @@ def compute_edge_lengths(node):
         if (((node.left is not None and node.left.height == 1) or (
                         node.right is not None and node.right.height == 1)) and delta > 4):
             delta -= 1
-        node.edge_length = ((delta + 1) // 2) - 1
+        node.edge_length = ((delta + 1) / 2) - 1
+
 
     # now fill in the height of node
     h = 1
@@ -233,7 +233,7 @@ def print_level(node, x, level):
         return
     isleft = (node.parent_dir == -1)
     if level == 0:
-        spaces = (x - print_next - ((node.lablen - isleft) // 2))
+        spaces = (x - print_next - ((node.lablen - isleft) / 2))
         sys.stdout.write(' ' * spaces)
 
         print_next += spaces
@@ -286,11 +286,11 @@ def drawtree(t):
     while (i < proot.height):
         print_next = 0
         print_level(proot, -xmin, i)
-        print('')
+        print
         i += 1
 
     if proot.height >= MAX_HEIGHT:
-        print(("This tree is taller than %d, and may be drawn incorrectly.".format(MAX_HEIGHT)))
+        print "This tree is taller than %d, and may be drawn incorrectly.".format(MAX_HEIGHT)
 
 
 def deserialize(string):
@@ -302,26 +302,11 @@ def deserialize(string):
     root = kids.pop()
     for node in nodes:
         if node:
-            if kids:
-                node.left = kids.pop()
-            if kids:
-                node.right = kids.pop()
+            if kids: node.left = kids.pop()
+            if kids: node.right = kids.pop()
     return root
 
-
-def draw_bst(nums):
-    """ Draw binary search tree from number in nums
-    :type nums: list[int]
-    """
-    if not nums:
-        return
-    root = TreeNode(nums[0])
-    for num in nums[1:]:
-        root = insert(num, root)
-    drawtree(root)
-
-
-def draw_random_bst(n):
+def draw_random_bst(n, balanced=False):
     """ Draw random binary search tree of n nodes
     """
     from random import randint
@@ -329,8 +314,9 @@ def draw_random_bst(n):
     max_num = 10 * n
     if 0 < n < MAX_HEIGHT:
         while len(nums) != n:
-            nums.add(randint(1, max_num))
-    draw_bst(list(nums))
+            nums.add(str(randint(1, max_num)))
+
+    draw_bst(list(nums), balanced=balanced)
 
 
 def draw_level_order(string):
@@ -346,6 +332,71 @@ def draw_level_order(string):
           15 7
     """
     drawtree(deserialize(string))
+
+currIndex = 0
+
+#deserialize to preorder
+def deserialize_preorder(nodes, key, min=float("-infinity"), max=float("infinity")):
+    global currIndex
+    if currIndex >=  len(nodes): return None
+
+    root = None
+
+    if min < key < max:
+        root = TreeNode(key)
+        currIndex += 1
+
+        if currIndex < len(nodes):
+            root.left = deserialize_preorder(nodes, nodes[currIndex], min, key)
+
+        if currIndex < len(nodes):
+            root.right = deserialize_preorder(nodes, nodes[currIndex], key, max)
+
+    return root
+
+
+# Build bst from (sorted) nodes. Used to auto-balance the tree.
+def to_bst(nodes, start, end):
+    if start > end: return None
+
+    mid = (start + end) / 2
+    root = TreeNode(nodes[mid])
+
+    root.left = to_bst(nodes, start, mid-1)
+    root.right = to_bst(nodes, mid+1,end)
+
+    return root
+
+
+def draw_bst(nodes, preorder=False, postorder=False,balanced=False):
+    if not nodes: return
+
+    #Convert list to ints if first element is int, otherwise use list of str
+    if re.match("\d+", nodes[0]):
+         nodes = [int(x) for x in nodes]
+
+    if balanced:
+        nodes.sort()
+        root = to_bst(nodes, 0, len(nodes)-1)
+
+    elif not preorder and not postorder:
+        root = TreeNode(nodes[0])
+        for num in nodes[1:]:
+            root = insert(num, root)  
+
+    elif preorder:
+        if type(nodes[0]) is int:
+            root = deserialize_preorder(nodes, nodes[0])
+        else:
+            root = deserialize_preorder(nodes, nodes[0], "", max(nodes) + "z")
+
+        if currIndex != len(nodes):
+            print("Not valid preorder sequence.")
+
+    elif postorder:
+        root = None #To do.
+
+    drawtree(root)
 
 
 if __name__ == '__main__':

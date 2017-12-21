@@ -75,6 +75,54 @@ Draw binary search tree from integer array
          15   25
 
 
+Command line
+------------
+
+Flags:
+ -p, --preorder    interpet sequence as preorder    
+ -b, --balanced    auto balance bst
+ -l, --level-order interpet sequence as level-order
+
+Print a bst:
+
+.. code-block:: bash
+
+    $ bst 10 5 8 4 6 
+    $ bst nodes.txt
+    $ echo "colin eric dave" | bst
+    $ cat nodes.txt | sort | uniq | bst
+
+Print a balanced bst:
+
+.. code-block:: bash
+
+    $ bst -b 10 5 6 9 3
+    $ bst -b nodes.txt
+    $ bst -b < nodes.txt
+
+Print a bst from a preorder expression:
+
+.. code-block:: bash
+
+    $ bst -p dave colin dan
+    $ echo "1 2 3 4 5" | bst -p
+    $ bst -p nodes.txt  
+
+Print a binary tree from a level order expression:
+
+.. code-block:: bash
+
+    $ bst -l [4,#,7,5,9,#]   (leetcode format)
+    $ bst -l {4 # 7 5} 
+
+Print a random bst:
+
+.. code-block:: bash
+
+    $ bst           (random bst of 10 nodes)
+    $ bst 5         (random bst of 5 nodes)
+    $ bst -b 7      (random balanced bst of 7 nodes)
+
 
 Installation
 ------------

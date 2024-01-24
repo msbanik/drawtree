@@ -365,7 +365,7 @@ def deserialize_preorder(nodes, key, min=float("-infinity"), max=float("infinity
 def to_bst(nodes, start, end):
     if start > end: return None
 
-    mid = (start + end) / 2
+    mid = (start + end) // 2
     root = TreeNode(nodes[mid])
 
     root.left = to_bst(nodes, start, mid-1)
